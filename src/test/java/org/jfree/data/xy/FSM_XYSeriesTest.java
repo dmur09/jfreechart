@@ -13,7 +13,7 @@ public class FSM_XYSeriesTest {
     @Test
     void testEmptyDataset() {
         // FSM: Initial state is Empty
-        XYSeries series = new XYSeries("Series1");
+        XYSeries series = new XYSeries("TestSeries");
         XYSeriesCollection dataset = new XYSeriesCollection(series); // still empty
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Empty Dataset Chart", "X-Axis", "Y-Axis", dataset);
@@ -23,7 +23,7 @@ public class FSM_XYSeriesTest {
     @Test
     void testAddToEmptyDataset() {
         // FSM: Empty -> Non-empty (adding one point)
-        XYSeries series = new XYSeries("Series1");
+        XYSeries series = new XYSeries("TestSeries");
         series.add(1, 10); // transition to Non-empty
         XYSeriesCollection dataset = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createXYLineChart(
@@ -34,7 +34,7 @@ public class FSM_XYSeriesTest {
     @Test
     void testAddMultiplePoints() {
         // FSM: Non-empty stays Non-empty (adding multiple points)
-        XYSeries series = new XYSeries("Series1");
+        XYSeries series = new XYSeries("TestSeries");
         for (int i = 1; i <= 5; i++) {
             series.add(i, i * 10);
         }
@@ -47,7 +47,7 @@ public class FSM_XYSeriesTest {
     @Test
     void testClearDataset() {
         // FSM: Non-empty -> Empty (clearing the series)
-        XYSeries series = new XYSeries("Series1");
+        XYSeries series = new XYSeries("TestSeries");
         series.add(1, 10);
         series.clear(); // back to Empty
         XYSeriesCollection dataset = new XYSeriesCollection(series);
