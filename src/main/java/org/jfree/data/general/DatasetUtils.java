@@ -448,6 +448,20 @@ public final class DatasetUtils {
     }
 
     /**
+     * Instead of 'newing' up a collection internally, pass it in
+     */
+    public static <S extends Comparable<S>> void sampleIntoCollection(
+            Function2D f, double start, double end, int samples, 
+            S seriesKey, XYSeriesCollection<S> collection) {
+
+        // get the series and add it to the injected collection
+        XYSeries<S> series = sampleFunction2DToSeries(f, start, end, samples, seriesKey);
+        
+        // test it
+        collection.addSeries(series);
+    }
+
+    /**
      * Creates an {@link XYSeries} by sampling the specified function over a
      * fixed range.
      *
