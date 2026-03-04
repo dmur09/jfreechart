@@ -47,7 +47,6 @@ import java.util.Objects;
 
 import org.jfree.chart.internal.Args;
 import org.jfree.chart.internal.CloneUtils;
-
 import org.jfree.data.general.Series;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesException;
@@ -134,6 +133,21 @@ public class XYSeries<K extends Comparable<K>> extends Series<K>
     public XYSeries(K key, boolean autoSort, boolean allowDuplicateXValues) {
         super(key);
         this.data = new java.util.ArrayList<>();
+        this.autoSort = autoSort;
+        this.allowDuplicateXValues = allowDuplicateXValues;
+        this.minX = Double.NaN;
+        this.maxX = Double.NaN;
+        this.minY = Double.NaN;
+        this.maxY = Double.NaN;
+    }
+
+    /**
+     * Dummy method for testing Dependency Injection.
+     * Allows injection of a custom data list to replace the hard-coded ArrayList.
+     */
+    public XYSeries(K key, boolean autoSort, boolean allowDuplicateXValues, java.util.List<XYDataItem> dataList) {
+        super(key);
+        this.data = dataList; // Here is the injected dependency
         this.autoSort = autoSort;
         this.allowDuplicateXValues = allowDuplicateXValues;
         this.minX = Double.NaN;

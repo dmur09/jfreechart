@@ -36,12 +36,18 @@
 
 package org.jfree.data.xy;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.jfree.chart.TestUtils;
 import org.jfree.chart.internal.CloneUtils;
 import org.jfree.data.general.SeriesException;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for the {@link XYSeries} class.
@@ -759,5 +765,24 @@ public class XYSeriesTest {
         assertEquals(2.0, s1.getMinY(), EPSILON);
         assertEquals(2.0, s1.getMaxY(), EPSILON);
     }
+
+    @Test
+    public void testInjectedListReceivesData_StateCheck() {
+        // 1. SETUP: Initialize a standard list to act as the external data structure.
+        // This bypasses the hardcoded instantiation present in the original constructor.
+        java.util.List<XYDataItem> customList = new java.util.ArrayList<>();
+
+        // 2. EXECUTE: Instantiate the series using the newly refactored constructor.
+        // The external list is injected directly into the object to handle data storage.
+        XYSeries<String> series = new XYSeries<>("TestKey", false, true, customList);
+        
+        XYDataItem item = new XYDataItem(1.0, 2.0);
+        series.add(item);
+
+        // 3. ASSERT: Validate that the injected list successfully captured the new data point.
+        // This confirms the class is correctly interacting with the injected dependency.
+        assertEquals(1, customList.size(), "Should have added 1 item to the custom list");
+    }
+
 
 }
