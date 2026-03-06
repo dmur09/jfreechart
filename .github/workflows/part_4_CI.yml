@@ -2,21 +2,21 @@ name: JFreeChart Part 4 CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] # when pushing to master branch
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master" ] # when merging into master branch
   workflow_dispatch:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # use ubuntu vm to run CI
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # pulls my JFreeChart repo so ubuntu has context
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4 # installs correct java version for use
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -27,7 +27,7 @@ jobs:
 
       - name: Upload Test Report
         if: always() # Run this even if tests fail
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # becuase ubuntu vm is destroyed, save test results
         with:
           name: junit-test-results
-          path: '**/target/surefire-reports/*.xml'
+          path: '**/target/surefire-reports/*.xml' # save this
